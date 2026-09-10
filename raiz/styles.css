@@ -7,3 +7,19 @@ body {
   color: #f5efe2;
   font-family: system-ui, sans-serif;
 }
+
+[hidden] {
+  display: none !important;
+}
+
+section {
+  max-width: 30rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}

@@ -3,14 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz na WEB</title>
+  <title>Bug Zero</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-    <h1>Bug Zero</h1>
-    <p id="mensagem">O jogo ainda não começou.</p>
-    <button id="btn-teste" type="button">Testar JavaScript</button>
+    <main>
+    <section id="tela-inicio">
+      <h1>Bug Zero</h1>
+      <p>Um quiz de conhecimentos gerais. Responda as perguntas e faça o maior número de pontos.</p>
+      <button id="btn-comecar" type="button">Começar</button>
+    </section>
+
+    <section id="tela-jogo" hidden>
+      <p>pergunta x  qwertyuiopsdfghjk.</p>
+      <button id="btn-terminar" type="button">Terminar</button>
+    </section>
+
+    <section id="tela-fim" hidden>
+      <h2>Fim de jogo</h2>
+      <button id="btn-reiniciar" type="button">Jogar de novo</button>
+    </section>
+
   </main>
   <script src="script.js"></script>
 </body>
