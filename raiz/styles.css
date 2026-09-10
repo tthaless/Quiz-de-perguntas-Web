@@ -23,3 +23,16 @@ button {
   font-size: 1rem;
   cursor: pointer;
 }
+#alternativas {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+#alternativas button {
+  width: 100%;
+}
+
+#retorno {
+  min-height: 1.5rem;
+}
