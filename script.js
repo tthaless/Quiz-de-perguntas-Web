@@ -19,6 +19,7 @@ var fimMensagem = document.getElementById("fim-mensagem");
 var textoVidas = document.getElementById("vidas");
 var barraProgresso = document.getElementById("barra-progresso");
 var fimImagem = document.getElementById("fim-imagem");
+var acertosHud = document.getElementById("acertos-hud");
 
 // Botões
 var botaoComecar = document.getElementById("btn-comecar");
@@ -99,6 +100,13 @@ function montarPartida() {
 }
 
 
+// Atualiza os contadores de acertos e vidas sem apagar os ícones
+function atualizarHud() {
+  acertosHud.innerHTML = "<img src='img/check.webp' alt='Acertos'> " + acertos;
+  textoVidas.innerHTML = "<img src='img/coracao.png' alt='Vidas'> " + vidas;
+}
+
+
 // Coloca a pergunta atual na tela
 function mostrarPergunta() {
   estado = "jogando";
@@ -109,7 +117,7 @@ function mostrarPergunta() {
   placar.textContent = "Pontos: " + pontos;
   barraProgresso.style.width = ((indice + 1) / perguntas.length * 100) + "%";
   retorno.className = "";
-  textoVidas.textContent = "Vidas: " + vidas;
+  atualizarHud();
   textoPergunta.textContent = atual.enunciado;
   retorno.textContent = "";
   areaAlternativas.innerHTML = "";
@@ -142,11 +150,12 @@ function responder(evento) {
     pontos = pontos + atual.valor;
     acertos = acertos + 1;
     placar.textContent = "Pontos: " + pontos;
+    atualizarHud();
     retorno.className = "acerto";
     retorno.textContent = "Acertou! +" + atual.valor + " pontos.";
   } else {
     vidas = vidas - 1;
-    textoVidas.textContent = "Vidas: " + vidas;
+    atualizarHud();
     retorno.className = "erro";
     retorno.textContent = "Errou. A resposta certa é " + atual.correta + ".";
   }
