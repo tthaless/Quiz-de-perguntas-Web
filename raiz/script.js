@@ -16,6 +16,7 @@ var fimTitulo = document.getElementById("fim-titulo");
 var fimPontos = document.getElementById("fim-pontos");
 var fimAcertos = document.getElementById("fim-acertos");
 var fimMensagem = document.getElementById("fim-mensagem");
+var textoVidas = document.getElementById("vidas");
 
 // Botões
 var botaoComecar = document.getElementById("btn-comecar");
@@ -29,6 +30,9 @@ var indice = 0;
 // Pontos e acertos da partida atual
 var pontos = 0;
 var acertos = 0;
+// Erros que o jogador ainda pode cometer
+var vidas = 5;
+
 
 
 // Esconde todas as telas e mostra só a que foi pedida
@@ -89,6 +93,7 @@ function montarPartida() {
   indice = 0;
   pontos = 0;
   acertos = 0;
+  vidas = 3;
 }
 
 
@@ -100,6 +105,7 @@ function mostrarPergunta() {
 
   contador.textContent = "Pergunta " + (indice + 1) + " de " + perguntas.length;
   placar.textContent = "Pontos: " + pontos;
+  textoVidas.textContent = "Vidas: " + vidas;
   textoPergunta.textContent = atual.enunciado;
   retorno.textContent = "";
   areaAlternativas.innerHTML = "";
@@ -133,6 +139,8 @@ function responder(evento) {
     placar.textContent = "Pontos: " + pontos;
     retorno.textContent = "Acertou! +" + atual.valor + " pontos.";
   } else {
+    vidas = vidas - 1;
+    textoVidas.textContent = "Vidas: " + vidas;
     retorno.textContent = "Errou. A resposta certa é " + atual.correta + ".";
   }
 
@@ -140,13 +148,16 @@ function responder(evento) {
     areaAlternativas.children[i].disabled = true;
   }
 
-  if (indice === perguntas.length - 1) {
+  if (vidas === 0 || indice === perguntas.length - 1) {
     botaoProxima.textContent = "Ver resultado";
   } else {
     botaoProxima.textContent = "Próxima";
   }
+
   botaoProxima.hidden = false;
 }
+
+
 
 
 // Avança para a próxima pergunta ou termina a partida
@@ -155,7 +166,7 @@ function proxima() {
     return;
   }
 
-  if (indice === perguntas.length - 1) {
+  if (vidas === 0 || indice === perguntas.length - 1) {
     terminarPartida();
     return;
   }
@@ -178,18 +189,15 @@ function terminarPartida() {
   fimPontos.textContent = pontos + " pontos";
   fimAcertos.textContent = acertos + " acertos de " + perguntas.length;
 
-  if (acertos === perguntas.length) {
+  if (vidas === 0) {
+    fimTitulo.textContent = "Você perdeu";
+    fimMensagem.textContent = "Suas cinco vidas acabaram na pergunta " + (indice + 1) + ".";
+  } else if (acertos === perguntas.length) {
     fimTitulo.textContent = "Perfeito!";
-    fimMensagem.textContent = "Você acertou todas as perguntas.";
-  } else if (acertos >= 7) {
-    fimTitulo.textContent = "Muito bem!";
-    fimMensagem.textContent = "Faltou pouco para a pontuação máxima.";
-  } else if (acertos >= 4) {
-    fimTitulo.textContent = "Nada mal";
-    fimMensagem.textContent = "Dá para melhorar na próxima partida.";
+    fimMensagem.textContent = "Você acertou todas as perguntas sem perder nenhuma vida.";
   } else {
-    fimTitulo.textContent = "Fim de jogo";
-    fimMensagem.textContent = "Tente de novo, as perguntas mudam a cada partida.";
+    fimTitulo.textContent = "Você venceu!";
+    fimMensagem.textContent = "Chegou ao fim com " + vidas + " vidas restantes.";
   }
 
   mostrarTela("fim");
