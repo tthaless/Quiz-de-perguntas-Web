@@ -18,6 +18,7 @@ var fimAcertos = document.getElementById("fim-acertos");
 var fimMensagem = document.getElementById("fim-mensagem");
 var textoVidas = document.getElementById("vidas");
 var barraProgresso = document.getElementById("barra-progresso");
+var fimImagem = document.getElementById("fim-imagem");
 
 // Botões
 var botaoComecar = document.getElementById("btn-comecar");
@@ -33,7 +34,6 @@ var pontos = 0;
 var acertos = 0;
 // Erros que o jogador ainda pode cometer
 var vidas = 5;
-
 
 
 // Esconde todas as telas e mostra só a que foi pedida
@@ -67,6 +67,7 @@ function sortear(lista, quantidade) {
 
   return escolhidos;
 }
+
 
 // Define quantos pontos cada pergunta da lista vale
 function marcarValor(lista, valor) {
@@ -117,12 +118,12 @@ function mostrarPergunta() {
   // Embaralha as alternativas sorteando todas elas
   var opcoes = sortear(atual.alternativas, atual.alternativas.length);
 
-    for (var i = 0; i < opcoes.length; i++) {
-        var botao = document.createElement("button");
-        botao.className = "alternativa";
-        botao.textContent = opcoes[i];
-        botao.addEventListener("click", responder);
-        areaAlternativas.appendChild(botao);
+  for (var i = 0; i < opcoes.length; i++) {
+    var botao = document.createElement("button");
+    botao.className = "alternativa";
+    botao.textContent = opcoes[i];
+    botao.addEventListener("click", responder);
+    areaAlternativas.appendChild(botao);
   }
 }
 
@@ -137,30 +138,30 @@ function responder(evento) {
   var atual = perguntas[indice];
   var escolha = evento.target.textContent;
 
-    if (escolha === atual.correta) {
-        pontos = pontos + atual.valor;
-        acertos = acertos + 1;
-        placar.textContent = "Pontos: " + pontos;
-        retorno.className = "acerto";
-        retorno.textContent = "Acertou! +" + atual.valor + " pontos.";
+  if (escolha === atual.correta) {
+    pontos = pontos + atual.valor;
+    acertos = acertos + 1;
+    placar.textContent = "Pontos: " + pontos;
+    retorno.className = "acerto";
+    retorno.textContent = "Acertou! +" + atual.valor + " pontos.";
   } else {
-        vidas = vidas - 1;
-        textoVidas.textContent = "Vidas: " + vidas;
-        retorno.className = "erro";
-        retorno.textContent = "Errou. A resposta certa é " + atual.correta + ".";
+    vidas = vidas - 1;
+    textoVidas.textContent = "Vidas: " + vidas;
+    retorno.className = "erro";
+    retorno.textContent = "Errou. A resposta certa é " + atual.correta + ".";
   }
 
-    for (var i = 0; i < areaAlternativas.children.length; i++) {
-        var opcao = areaAlternativas.children[i];
-        opcao.disabled = true;
+  for (var i = 0; i < areaAlternativas.children.length; i++) {
+    var opcao = areaAlternativas.children[i];
+    opcao.disabled = true;
 
-        if (opcao.textContent === atual.correta) {
-        opcao.classList.add("certa");
-        } else if (opcao.textContent === escolha) {
-        opcao.classList.add("errada");
-        } else {
-        opcao.classList.add("apagada");
-        }
+    if (opcao.textContent === atual.correta) {
+      opcao.classList.add("certa");
+    } else if (opcao.textContent === escolha) {
+      opcao.classList.add("errada");
+    } else {
+      opcao.classList.add("apagada");
+    }
   }
 
   if (vidas === 0 || indice === perguntas.length - 1) {
@@ -171,8 +172,6 @@ function responder(evento) {
 
   botaoProxima.hidden = false;
 }
-
-
 
 
 // Avança para a próxima pergunta ou termina a partida
@@ -205,12 +204,21 @@ function terminarPartida() {
   fimAcertos.textContent = acertos + " acertos de " + perguntas.length;
 
   if (vidas === 0) {
-    fimTitulo.textContent = "Você perdeu";
-    fimMensagem.textContent = "Suas cinco vidas acabaram na pergunta " + (indice + 1) + ".";
+    telaFim.className = "tela derrota";
+    fimImagem.src = "img/derrota.png";
+    fimImagem.alt = "Carimbo de derrota";
+    fimTitulo.textContent = "Suas vidas acabaram";
+    fimMensagem.textContent = "Você parou na pergunta " + (indice + 1) + " de " + perguntas.length + ".";
   } else if (acertos === perguntas.length) {
-    fimTitulo.textContent = "Perfeito!";
-    fimMensagem.textContent = "Você acertou todas as perguntas sem perder nenhuma vida.";
+    telaFim.className = "tela vitoria";
+    fimImagem.src = "img/vitoria.webp";
+    fimImagem.alt = "Coroa de louros";
+    fimTitulo.textContent = "Você acertou tudo!";
+    fimMensagem.textContent = "Dez de dez, sem perder nenhuma vida.";
   } else {
+    telaFim.className = "tela vitoria";
+    fimImagem.src = "img/vitoria.webp";
+    fimImagem.alt = "Coroa de louros";
     fimTitulo.textContent = "Você venceu!";
     fimMensagem.textContent = "Chegou ao fim com " + vidas + " vidas restantes.";
   }

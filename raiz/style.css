@@ -213,6 +213,26 @@ h2 {
   color: var(--texto-suave);
 }
 
+
+/* A tela inteira muda de cor conforme o resultado */
+#tela-fim.derrota #fim-titulo,
+#tela-fim.derrota #fim-pontos {
+  color: var(--erro);
+}
+
+#tela-fim.vitoria #fim-titulo,
+#tela-fim.vitoria #fim-pontos {
+  color: #b8860b;
+}
+/* Imagem de vitória ou derrota */
+#fim-imagem {
+  display: block;
+  width: 180px;
+  max-width: 60%;
+  height: auto;
+  margin: 0 auto 1rem;
+}
+
 /* Ajustes para telas pequenas */
 @media (max-width: 30rem) {
   .cartao {
