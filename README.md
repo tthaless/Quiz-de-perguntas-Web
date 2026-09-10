@@ -78,7 +78,7 @@ Acesse o link do GitHub Pages informado acima.
 
 1. Clone o repositório
 ```
-git clone https://github.com/SEU-USUARIO/Quiz-de-perguntas-Web.git
+git clone https://tthaless.github.io/Quiz-de-perguntas-Web/
 cd Quiz-de-perguntas-Web
 ```
 
@@ -97,7 +97,7 @@ Distribuído sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais det
 {
   "nome": "Teste Seu Conhecimento",
   "descricao": "Jogo de perguntas e respostas de conhecimentos gerais. Cada partida sorteia 10 perguntas de dificuldades diferentes. O jogador tem 5 vidas e ganha pontos conforme a dificuldade de cada acerto.",
-  "autor": "Thales Rodrigues Resende",
+  "autores": "Thales Rodrigues Resende",
   "turma": "10A"
 }
 ```
