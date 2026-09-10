@@ -3,38 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bug Zero</title>
+  <title>Teste Seu Conhecimento</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main>
-    <section id="tela-inicio">
-      <h1>Bug Zero</h1>
-      <p>Um quiz de conhecimentos gerais. Responda as perguntas e faça o maior número de pontos.</p>
-      <p>Responda 10 perguntas de conhecimentos gerais. Você tem 5 vidas, e cada erro custa uma.</p>
-      <p>Perguntas fáceis valem 10 pontos, médias 20 e difíceis 30.</p>
-      <button id="btn-comecar" type="button">Começar</button>
+
+  <main class="cartao">
+
+    <section id="tela-inicio" class="tela">
+      <h1>Teste Seu Conhecimento</h1>
+      <p class="intro">Dez perguntas de conhecimentos gerais, sorteadas a cada partida.</p>
+
+      <ul class="regras">
+        <li>Você começa com <strong>5 vidas</strong> e cada erro custa uma.</li>
+        <li>Perguntas fáceis valem <strong>10 pontos</strong>, médias <strong>20</strong> e difíceis <strong>30</strong>.</li>
+        <li>Chegue ao fim das dez perguntas com pelo menos uma vida para vencer.</li>
+      </ul>
+
+      <button id="btn-comecar" class="botao" type="button">Começar</button>
     </section>
 
-    <section id="tela-jogo" hidden>
-      <p id="contador">Pergunta 1 de 10</p>
-      <p id="placar">Pontos: 0</p>
-      <p id="vidas">Vidas: 5</p>
+    <section id="tela-jogo" class="tela" hidden>
+      <div class="barra">
+        <div id="barra-progresso"></div>
+      </div>
+
+      <div class="hud">
+        <span id="contador">Pergunta 1 de 10</span>
+        <span id="placar">Pontos: 0</span>
+        <span id="vidas">Vidas: 5</span>
+      </div>
+
       <h2 id="pergunta">Pergunta</h2>
       <div id="alternativas"></div>
       <p id="retorno"></p>
-      <button id="btn-proxima" type="button" hidden>Próxima</button>
+      <button id="btn-proxima" class="botao" type="button" hidden>Próxima</button>
     </section>
 
-    <section id="tela-fim" hidden>
+    <section id="tela-fim" class="tela" hidden>
       <h2 id="fim-titulo">Fim de jogo</h2>
       <p id="fim-pontos">0 pontos</p>
       <p id="fim-acertos">0 acertos de 10</p>
       <p id="fim-mensagem"></p>
-      <button id="btn-reiniciar" type="button">Jogar de novo</button>
+      <button id="btn-reiniciar" class="botao" type="button">Jogar de novo</button>
     </section>
 
   </main>
+
   <script src="perguntas.js"></script>
   <script src="script.js"></script>
 </body>

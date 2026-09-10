@@ -17,6 +17,7 @@ var fimPontos = document.getElementById("fim-pontos");
 var fimAcertos = document.getElementById("fim-acertos");
 var fimMensagem = document.getElementById("fim-mensagem");
 var textoVidas = document.getElementById("vidas");
+var barraProgresso = document.getElementById("barra-progresso");
 
 // Botões
 var botaoComecar = document.getElementById("btn-comecar");
@@ -93,7 +94,7 @@ function montarPartida() {
   indice = 0;
   pontos = 0;
   acertos = 0;
-  vidas = 3;
+  vidas = 5;
 }
 
 
@@ -105,6 +106,8 @@ function mostrarPergunta() {
 
   contador.textContent = "Pergunta " + (indice + 1) + " de " + perguntas.length;
   placar.textContent = "Pontos: " + pontos;
+  barraProgresso.style.width = ((indice + 1) / perguntas.length * 100) + "%";
+  retorno.className = "";
   textoVidas.textContent = "Vidas: " + vidas;
   textoPergunta.textContent = atual.enunciado;
   retorno.textContent = "";
@@ -114,11 +117,12 @@ function mostrarPergunta() {
   // Embaralha as alternativas sorteando todas elas
   var opcoes = sortear(atual.alternativas, atual.alternativas.length);
 
-  for (var i = 0; i < opcoes.length; i++) {
-    var botao = document.createElement("button");
-    botao.textContent = opcoes[i];
-    botao.addEventListener("click", responder);
-    areaAlternativas.appendChild(botao);
+    for (var i = 0; i < opcoes.length; i++) {
+        var botao = document.createElement("button");
+        botao.className = "alternativa";
+        botao.textContent = opcoes[i];
+        botao.addEventListener("click", responder);
+        areaAlternativas.appendChild(botao);
   }
 }
 
@@ -133,19 +137,30 @@ function responder(evento) {
   var atual = perguntas[indice];
   var escolha = evento.target.textContent;
 
-  if (escolha === atual.correta) {
-    pontos = pontos + atual.valor;
-    acertos = acertos + 1;
-    placar.textContent = "Pontos: " + pontos;
-    retorno.textContent = "Acertou! +" + atual.valor + " pontos.";
+    if (escolha === atual.correta) {
+        pontos = pontos + atual.valor;
+        acertos = acertos + 1;
+        placar.textContent = "Pontos: " + pontos;
+        retorno.className = "acerto";
+        retorno.textContent = "Acertou! +" + atual.valor + " pontos.";
   } else {
-    vidas = vidas - 1;
-    textoVidas.textContent = "Vidas: " + vidas;
-    retorno.textContent = "Errou. A resposta certa é " + atual.correta + ".";
+        vidas = vidas - 1;
+        textoVidas.textContent = "Vidas: " + vidas;
+        retorno.className = "erro";
+        retorno.textContent = "Errou. A resposta certa é " + atual.correta + ".";
   }
 
-  for (var i = 0; i < areaAlternativas.children.length; i++) {
-    areaAlternativas.children[i].disabled = true;
+    for (var i = 0; i < areaAlternativas.children.length; i++) {
+        var opcao = areaAlternativas.children[i];
+        opcao.disabled = true;
+
+        if (opcao.textContent === atual.correta) {
+        opcao.classList.add("certa");
+        } else if (opcao.textContent === escolha) {
+        opcao.classList.add("errada");
+        } else {
+        opcao.classList.add("apagada");
+        }
   }
 
   if (vidas === 0 || indice === perguntas.length - 1) {
