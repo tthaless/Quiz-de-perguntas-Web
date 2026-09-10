@@ -11,6 +11,11 @@ var contador = document.getElementById("contador");
 var textoPergunta = document.getElementById("pergunta");
 var areaAlternativas = document.getElementById("alternativas");
 var retorno = document.getElementById("retorno");
+var placar = document.getElementById("placar");
+var fimTitulo = document.getElementById("fim-titulo");
+var fimPontos = document.getElementById("fim-pontos");
+var fimAcertos = document.getElementById("fim-acertos");
+var fimMensagem = document.getElementById("fim-mensagem");
 
 // Botões
 var botaoComecar = document.getElementById("btn-comecar");
@@ -21,6 +26,9 @@ var botaoReiniciar = document.getElementById("btn-reiniciar");
 var perguntas = [];
 // Posição da pergunta atual, de 0 a 9
 var indice = 0;
+// Pontos e acertos da partida atual
+var pontos = 0;
+var acertos = 0;
 
 
 // Esconde todas as telas e mostra só a que foi pedida
@@ -55,16 +63,32 @@ function sortear(lista, quantidade) {
   return escolhidos;
 }
 
+// Define quantos pontos cada pergunta da lista vale
+function marcarValor(lista, valor) {
+  for (var i = 0; i < lista.length; i++) {
+    lista[i].valor = valor;
+  }
+}
+
 
 // Monta a lista de 10 perguntas da partida
 function montarPartida() {
-  var sorteadas = [];
-  sorteadas = sorteadas.concat(sortear(faceis, 3));
-  sorteadas = sorteadas.concat(sortear(medias, 4));
-  sorteadas = sorteadas.concat(sortear(dificeis, 3));
+  var sorteadasFaceis = sortear(faceis, 3);
+  var sorteadasMedias = sortear(medias, 4);
+  var sorteadasDificeis = sortear(dificeis, 3);
 
-  perguntas = sorteadas;
+  marcarValor(sorteadasFaceis, 10);
+  marcarValor(sorteadasMedias, 20);
+  marcarValor(sorteadasDificeis, 30);
+
+  perguntas = [];
+  perguntas = perguntas.concat(sorteadasFaceis);
+  perguntas = perguntas.concat(sorteadasMedias);
+  perguntas = perguntas.concat(sorteadasDificeis);
+
   indice = 0;
+  pontos = 0;
+  acertos = 0;
 }
 
 
@@ -75,6 +99,7 @@ function mostrarPergunta() {
   var atual = perguntas[indice];
 
   contador.textContent = "Pergunta " + (indice + 1) + " de " + perguntas.length;
+  placar.textContent = "Pontos: " + pontos;
   textoPergunta.textContent = atual.enunciado;
   retorno.textContent = "";
   areaAlternativas.innerHTML = "";
@@ -103,7 +128,10 @@ function responder(evento) {
   var escolha = evento.target.textContent;
 
   if (escolha === atual.correta) {
-    retorno.textContent = "Acertou!";
+    pontos = pontos + atual.valor;
+    acertos = acertos + 1;
+    placar.textContent = "Pontos: " + pontos;
+    retorno.textContent = "Acertou! +" + atual.valor + " pontos.";
   } else {
     retorno.textContent = "Errou. A resposta certa é " + atual.correta + ".";
   }
@@ -146,6 +174,24 @@ function comecarPartida() {
 
 function terminarPartida() {
   estado = "fim";
+
+  fimPontos.textContent = pontos + " pontos";
+  fimAcertos.textContent = acertos + " acertos de " + perguntas.length;
+
+  if (acertos === perguntas.length) {
+    fimTitulo.textContent = "Perfeito!";
+    fimMensagem.textContent = "Você acertou todas as perguntas.";
+  } else if (acertos >= 7) {
+    fimTitulo.textContent = "Muito bem!";
+    fimMensagem.textContent = "Faltou pouco para a pontuação máxima.";
+  } else if (acertos >= 4) {
+    fimTitulo.textContent = "Nada mal";
+    fimMensagem.textContent = "Dá para melhorar na próxima partida.";
+  } else {
+    fimTitulo.textContent = "Fim de jogo";
+    fimMensagem.textContent = "Tente de novo, as perguntas mudam a cada partida.";
+  }
+
   mostrarTela("fim");
 }
 
