@@ -8,7 +8,7 @@
 
 **Teste Seu Conhecimento** é um jogo de perguntas e respostas sobre conhecimentos gerais, executado diretamente no navegador. A cada partida, dez perguntas são sorteadas de um banco maior, distribuídas entre três níveis de dificuldade. O jogador precisa chegar ao fim das perguntas sem perder todas as vidas, somando o máximo de pontos possível.
 
-🔗 **Jogue aqui:** https://SEU-USUARIO.github.io/Quiz-de-perguntas-Web/
+🔗 **Jogue aqui:** https://tthaless.github.io/Quiz-de-perguntas-Web/
 
 
 ## 🎮 Funcionalidades
